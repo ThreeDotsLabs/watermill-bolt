@@ -14,7 +14,6 @@
 //            Bucket: []bolt.BucketName{
 //                    bolt.BucketName("watermill"),
 //            },
-//            Logger: watermill.NewStdLogger(true, true),
 //    }
 //
 //    publisher, err := bolt.NewPublisher(db, bolt.PublisherConfig{
