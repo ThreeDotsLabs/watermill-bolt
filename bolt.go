@@ -114,9 +114,10 @@ type SubscriberConfig struct {
 	// change it in the future to avoid accidently abandoning your old
 	// subscriptions.
 	//
-	// If only one subscriber used to listen to various topics is used
-	// within your database then it is perfectly fine to have the function
-	// return a contant string, for example the name of your application.
+	// If only one subscriber is used to listen to various topics using
+	// your database then it is perfectly fine to use the default value or
+	// write a function that returns a contant string, for example the name
+	// of your application.
 	//
 	// Defaults to topic + "_sub".
 	GenerateSubscriptionName GenerateSubscriptionNameFn
