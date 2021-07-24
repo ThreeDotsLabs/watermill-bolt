@@ -23,6 +23,7 @@ type Marshaler interface {
 	Unmarshal(b []byte) (PersistedMessage, error)
 }
 
+// JSONMarshaler marshals the messages as JSON. This is the default marshaler.
 type JSONMarshaler struct {
 }
 
