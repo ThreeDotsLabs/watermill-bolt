@@ -1,4 +1,4 @@
-# Watermill Bolt Cloud Pub/Sub [![CI](https://github.com/boreq/watermill-bolt/workflows/CI/badge.svg)][actions] [![godocs.io](http://godocs.io/github.com/pkg/errors?status.svg)][godoc]
+# Watermill Bolt Pub/Sub [![CI](https://github.com/boreq/watermill-bolt/workflows/CI/badge.svg)][actions] [![godocs.io](http://godocs.io/github.com/pkg/errors?status.svg)][godoc]
 
 This is Pub/Sub for the [Watermill][watermill] project.
 
