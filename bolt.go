@@ -111,7 +111,7 @@ type SubscriberConfig struct {
 	// subscriptions created by the subscriber. The names created by
 	// multiple subscribers have to be unique within a single topic. Once
 	// you set this function for a particular subscriber you should not
-	// change it in the future to avoid accidently abandoning your old
+	// change it in the future to avoid accidentally abandoning your old
 	// subscriptions.
 	//
 	// If only one subscriber is used to listen to various topics using

@@ -68,8 +68,9 @@ func (s *Subscriber) Subscribe(ctx context.Context, topic string) (<-chan *messa
 }
 
 // Close closes all channels returned by subscribe and shuts down the
-// subscriber. Close blocks until all returned channels are successfuly closed.
-// Close can be called multiple times but subsequent calls have no effect.
+// subscriber. Close blocks until all returned channels are successfully
+// closed. Close can be called multiple times but subsequent calls have no
+// effect.
 func (s *Subscriber) Close() error {
 	select {
 	case <-s.closeCh:
