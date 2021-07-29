@@ -1,4 +1,4 @@
-# Watermill Bolt Pub/Sub [![CI](https://github.com/boreq/watermill-bolt/workflows/CI/badge.svg)][actions] [![godocs.io](http://godocs.io/github.com/pkg/errors?status.svg)][godoc]
+# Watermill Bolt Pub/Sub [![CI](https://github.com/ThreeDotsLabs/watermill-bolt/workflows/CI/badge.svg)][actions] [![godocs.io](http://godocs.io/github.com/pkg/errors?status.svg)][godoc]
 <img align="right" width="200" src="https://threedots.tech/watermill-io/watermill-logo.png">
 
 This is a Pub/Sub for the [Watermill][watermill] project which uses the [Bolt][bolt] database.
@@ -38,5 +38,5 @@ $ make test
 
 [watermill]: https://watermill.io/
 [bolt]: https://github.com/etcd-io/bbolt
-[actions]: https://github.com/boreq/watermill-bolt/actions
-[godoc]: http://godocs.io/github.com/boreq/watermill-bolt
+[actions]: https://github.com/ThreeDotsLabs/watermill-bolt/actions
+[godoc]: http://godocs.io/github.com/ThreeDotsLabs/watermill-bolt
