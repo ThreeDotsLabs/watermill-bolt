@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/ThreeDotsLabs/watermill/message"
-	bolt "github.com/boreq/watermill-bolt"
+	"github.com/boreq/watermill-bolt/pkg/bolt"
 	"github.com/stretchr/testify/require"
 )
 

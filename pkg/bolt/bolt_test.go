@@ -9,7 +9,7 @@ import (
 	"github.com/ThreeDotsLabs/watermill"
 	"github.com/ThreeDotsLabs/watermill/message"
 	"github.com/ThreeDotsLabs/watermill/pubsub/tests"
-	bolt "github.com/boreq/watermill-bolt"
+	"github.com/boreq/watermill-bolt/pkg/bolt"
 	"github.com/stretchr/testify/require"
 	"go.etcd.io/bbolt"
 )
