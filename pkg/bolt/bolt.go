@@ -6,7 +6,7 @@
 //
 //
 //    import(
-//            bolt "github.com/boreq/watermill-bolt"
+//            "github.com/ThreeDotsLabs/watermill-bolt/pkg/bolt"
 //            "go.etcd.io/bbolt"
 //    )
 //

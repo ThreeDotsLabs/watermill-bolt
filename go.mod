@@ -1,4 +1,4 @@
-module github.com/boreq/watermill-bolt
+module github.com/ThreeDotsLabs/watermill-bolt
 
 go 1.16
 
