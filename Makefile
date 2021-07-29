@@ -1,6 +1,6 @@
 all: test lint
 
-ci: tools dependencies fmt check-repository-unchanged test lint
+ci: tools dependencies test lint tidy fmt check-repository-unchanged 
 
 check-repository-unchanged:
 	./_tools/check_repository_unchanged.sh
@@ -11,6 +11,9 @@ tools:
 
 fmt:
 	goimports -w .
+
+tidy:
+	go mod tidy
 
 dependencies:
 	go get ./...
@@ -25,4 +28,4 @@ test:
 test-short:
 	go test -short -race ./...
 
-.PHONY: all ci check-repository-unchanged tools fmt dependencies lint test test-short
+.PHONY: all ci check-repository-unchanged tools fmt tidy dependencies lint test test-short
