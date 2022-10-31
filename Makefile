@@ -28,4 +28,11 @@ test:
 test-short:
 	go test -short -race ./...
 
+up:
+
+wait:
+
+build:
+	go build ./...
+
 .PHONY: all ci check-repository-unchanged tools fmt tidy dependencies lint test test-short
