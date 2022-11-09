@@ -1,4 +1,4 @@
-# Watermill Bolt Pub/Sub [![CI](https://github.com/ThreeDotsLabs/watermill-bolt/workflows/CI/badge.svg)][actions] [![godocs.io](https://godocs.io/github.com/ThreeDotsLabs/watermill-bolt?status.svg)][godoc] [![Go Reference](https://pkg.go.dev/badge/github.com/ThreeDotsLabs/watermill-bolt.svg)][goreference]
+# Watermill Bolt Pub/Sub [![CI Status](https://github.com/ThreeDotsLabs/watermill-bolt/actions/workflows/master.yml/badge.svg)](https://github.com/ThreeDotsLabs/watermill-bolt/actions/workflows/master.yml) [![godocs.io](https://godocs.io/github.com/ThreeDotsLabs/watermill-bolt?status.svg)][godoc] [![Go Reference](https://pkg.go.dev/badge/github.com/ThreeDotsLabs/watermill-bolt.svg)][goreference]
 <img align="right" width="200" src="https://threedots.tech/watermill-io/watermill-logo.png">
 
 This is a Pub/Sub for the [Watermill][watermill] project which uses the [Bolt][bolt] database.
