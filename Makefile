@@ -23,8 +23,14 @@ lint:
 test:
 	go test -race ./...
 
-test-short:
-	go test -short -race ./...
+test_short:
+	go test -parallel 20 ./... -short
+
+test_race:
+	go test ./... -short -race
+
+test_stress:
+	go test -tags=stress -parallel 30 -timeout=15m ./...
 
 up:
 
