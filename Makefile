@@ -1,7 +1,5 @@
 all: test lint
 
-ci: tools dependencies test lint tidy fmt check-repository-unchanged 
-
 check-repository-unchanged:
 	./_tools/check_repository_unchanged.sh
 
@@ -25,7 +23,20 @@ lint:
 test:
 	go test -race ./...
 
-test-short:
-	go test -short -race ./...
+test_short:
+	go test -parallel 20 ./... -short
+
+test_race:
+	go test ./... -short -race
+
+test_stress:
+	go test -tags=stress -parallel 30 -timeout=15m ./...
+
+up:
+
+wait:
+
+build:
+	go build ./...
 
 .PHONY: all ci check-repository-unchanged tools fmt tidy dependencies lint test test-short
