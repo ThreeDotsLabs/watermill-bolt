@@ -1,7 +1,6 @@
 package bolt_test
 
 import (
-	"io/ioutil"
 	"os"
 	"testing"
 	"time"
@@ -61,7 +60,7 @@ func TestBolt(t *testing.T) {
 type cleanupFunc func()
 
 func fileFixture(t *testing.T) (string, cleanupFunc) {
-	file, err := ioutil.TempFile("", "eggplant_test")
+	file, err := os.CreateTemp("", "eggplant_test")
 	if err != nil {
 		t.Fatal(err)
 	}
