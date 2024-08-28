@@ -4,26 +4,24 @@
 // Apart from the subscriber there are two publishers available, one which uses
 // a provided transaction and one that creates its own transaction.
 //
+//	import(
+//	        "github.com/ThreeDotsLabs/watermill-bolt/pkg/bolt"
+//	        "go.etcd.io/bbolt"
+//	)
 //
-//    import(
-//            "github.com/ThreeDotsLabs/watermill-bolt/pkg/bolt"
-//            "go.etcd.io/bbolt"
-//    )
+//	commonConfig := bolt.CommonConfig{
+//	        Bucket: []bolt.BucketName{
+//	                bolt.BucketName("watermill"),
+//	        },
+//	}
 //
-//    commonConfig := bolt.CommonConfig{
-//            Bucket: []bolt.BucketName{
-//                    bolt.BucketName("watermill"),
-//            },
-//    }
+//	publisher, err := bolt.NewPublisher(db, bolt.PublisherConfig{
+//	        Common: commonConfig,
+//	})
 //
-//    publisher, err := bolt.NewPublisher(db, bolt.PublisherConfig{
-//            Common: commonConfig,
-//    })
-//
-//    subscriber, err := bolt.NewSubscriber(db, bolt.SubscriberConfig{
-//            Common: commonConfig,
-//    })
-//
+//	subscriber, err := bolt.NewSubscriber(db, bolt.SubscriberConfig{
+//	        Common: commonConfig,
+//	})
 package bolt
 
 import (
@@ -145,9 +143,9 @@ func (config SubscriberConfig) valid() error {
 
 // - buckets...
 //   - topics
-//     - <topic_name>
-//       - subscriptions
-//         - <subscription_name>
+//   - <topic_name>
+//   - subscriptions
+//   - <subscription_name>
 func subscriptionsBucketTree(buckets []BucketName, topic string) []BucketName {
 	return append(
 		buckets,
