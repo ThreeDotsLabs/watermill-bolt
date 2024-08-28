@@ -32,6 +32,9 @@ test_race:
 test_stress:
 	go test -tags=stress -parallel 30 -timeout=15m ./...
 
+test_codecov: up wait
+	go test -coverprofile=coverage.out -covermode=atomic ./...
+
 up:
 
 wait:
