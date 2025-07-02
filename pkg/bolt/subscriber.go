@@ -26,6 +26,7 @@ type Subscriber struct {
 	loadMsgsFn loadMsgs
 }
 
+// loadMsgs used for monkey-patching subscriber retrieve messages logic
 type loadMsgs func(ctx context.Context, s *Subscriber, topic string) ([]rawMessage, error)
 
 // NewSubscriber creates an initialized subscriber.
