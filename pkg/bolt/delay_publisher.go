@@ -116,7 +116,7 @@ func (p *DelayedBoltPublisher) marshalMessages(messages []*message.Message) ([]r
 		}
 
 		result = append(result, rawMessage{
-			Key:   []byte(until),
+			Key:   timeBasedKey(until, msg.UUID),
 			Value: messageBytes,
 		})
 	}
@@ -158,4 +158,8 @@ func (p *DelayedBoltPublisher) getSubscriptionsBucket(tx *bbolt.Tx, topic string
 // interface.
 func (p *DelayedBoltPublisher) Close() error {
 	return nil
+}
+
+func timeBasedKey(until, uuid string) []byte {
+	return []byte(until + "_" + uuid)
 }

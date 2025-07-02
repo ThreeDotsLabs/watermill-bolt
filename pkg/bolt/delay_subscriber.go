@@ -5,6 +5,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/ThreeDotsLabs/watermill"
 	"github.com/boreq/errors"
 	"go.etcd.io/bbolt"
 )
@@ -43,7 +44,9 @@ func getMessagesWithDelay(_ context.Context, s *Subscriber, topic string) ([]raw
 		c := bucket.Cursor()
 		now := []byte(time.Now().UTC().Format(time.RFC3339))
 
-		for k, v := c.First(); k != nil && bytes.Compare(k, now) <= 0; k, v = c.Next() {
+		s.config.Common.Logger.Trace("sub check", watermill.LogFields{"before": string(now), "topic": topic})
+
+		for k, v := c.First(); k != nil && bytes.Compare(k[:len(now)], now) <= 0; k, v = c.Next() {
 			messages = append(messages, newRawMessage(k, v))
 		}
 

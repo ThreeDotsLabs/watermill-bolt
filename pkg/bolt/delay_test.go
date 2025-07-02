@@ -80,8 +80,10 @@ func TestDelayedBoltPublisherWithDelay(t *testing.T) {
 
 	msg := message.NewMessage(watermill.NewUUID(), []byte("{}"))
 	delay.Message(msg, delay.For(time.Second*5))
+	unwantedMsg := message.NewMessage(watermill.NewUUID(), []byte("{}"))
+	delay.Message(unwantedMsg, delay.For(time.Minute))
 
-	err = pub.Publish(topic, msg)
+	err = pub.Publish(topic, unwantedMsg, msg)
 	require.NoError(t, err)
 
 	select {
@@ -99,4 +101,10 @@ func TestDelayedBoltPublisherWithDelay(t *testing.T) {
 			t.Errorf("message should be received")
 		}
 	}, time.Second, time.Millisecond*10)
+
+	select {
+	case <-messages:
+		t.Errorf("unwanted message should not be received")
+	case <-time.After(time.Second):
+	}
 }
