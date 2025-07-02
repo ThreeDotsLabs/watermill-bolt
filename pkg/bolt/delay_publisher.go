@@ -10,6 +10,10 @@ import (
 	"go.etcd.io/bbolt"
 )
 
+// DelayedBoltPublisher publishes messages with delay functionality. Messages
+// with delay metadata are stored with their scheduled time as the bucket key,
+// allowing the DelayedBoltSubscriber to retrieve only messages whose time
+// has arrived.
 type DelayedBoltPublisher struct {
 	db     *bbolt.DB
 	config PublisherConfig
@@ -87,16 +91,16 @@ func (p *DelayedBoltPublisher) storeDelayedMessages(tx *bbolt.Tx, topic string, 
 	return nil
 }
 
-func (p *DelayedBoltPublisher) marshalMessages(messages []*message.Message) ([]marshalledDelayedMessage, error) {
-	var result []marshalledDelayedMessage
+func (p *DelayedBoltPublisher) marshalMessages(messages []*message.Message) ([]rawMessage, error) {
+	var result []rawMessage
 
 	for _, msg := range messages {
 		until := msg.Metadata.Get(delay.DelayedUntilKey)
 		if until == "" {
-			p.config.Common.Logger.Info("WARNING: delayed until key is empty", watermill.LogFields{
+			p.config.Common.Logger.Info("WARN: delayed until key is empty", watermill.LogFields{
 				"uuid": msg.UUID,
 			})
-			until = time.Now().Format(time.RFC3339)
+			until = time.Now().UTC().Format(time.RFC3339)
 		}
 
 		pmsg := PersistedMessage{
@@ -111,18 +115,18 @@ func (p *DelayedBoltPublisher) marshalMessages(messages []*message.Message) ([]m
 			return nil, errors.Wrap(err, "failed to marshal delayed message")
 		}
 
-		result = append(result, marshalledDelayedMessage{
-			key:   []byte(until),
-			value: messageBytes,
+		result = append(result, rawMessage{
+			Key:   []byte(until),
+			Value: messageBytes,
 		})
 	}
 
 	return result, nil
 }
 
-func (p *DelayedBoltPublisher) putDelayedMessages(bucket *bbolt.Bucket, marshalledMessages []marshalledDelayedMessage) error {
+func (p *DelayedBoltPublisher) putDelayedMessages(bucket *bbolt.Bucket, marshalledMessages []rawMessage) error {
 	for _, msg := range marshalledMessages {
-		if err := bucket.Put(msg.key, msg.value); err != nil {
+		if err := bucket.Put(msg.Key, msg.Value); err != nil {
 			return errors.Wrap(err, "failed to store delayed message")
 		}
 	}
@@ -150,11 +154,8 @@ func (p *DelayedBoltPublisher) getSubscriptionsBucket(tx *bbolt.Tx, topic string
 	return bucket
 }
 
+// Close does not have to be called and is here just to satisfy the publisher
+// interface.
 func (p *DelayedBoltPublisher) Close() error {
 	return nil
-}
-
-type marshalledDelayedMessage struct {
-	key   []byte
-	value []byte
 }

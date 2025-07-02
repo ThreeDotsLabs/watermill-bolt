@@ -9,10 +9,15 @@ import (
 	"go.etcd.io/bbolt"
 )
 
+// DelayedBoltSubscriber extends the regular Subscriber to handle delayed
+// messages. It only retrieves messages whose scheduled time has arrived,
+// based on the message keys stored as RFC3339 timestamps.
 type DelayedBoltSubscriber struct {
 	*Subscriber
 }
 
+// NewDelayedBoltSubscriber creates an initialized delayed subscriber that only
+// delivers messages when their scheduled time has arrived.
 func NewDelayedBoltSubscriber(db *bbolt.DB, config SubscriberConfig) (*DelayedBoltSubscriber, error) {
 	subscriber, err := NewSubscriber(db, config)
 	if err != nil {
