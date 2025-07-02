@@ -19,11 +19,14 @@ import (
 //
 // Subscriber has to be initialized by using NewSubscriber.
 type Subscriber struct {
-	db      *bbolt.DB
-	config  SubscriberConfig
-	closeCh chan struct{}
-	wg      sync.WaitGroup
+	db         *bbolt.DB
+	config     SubscriberConfig
+	closeCh    chan struct{}
+	wg         sync.WaitGroup
+	loadMsgsFn loadMsgs
 }
+
+type loadMsgs func(ctx context.Context, s *Subscriber, topic string) ([]rawMessage, error)
 
 // NewSubscriber creates an initialized subscriber.
 func NewSubscriber(db *bbolt.DB, config SubscriberConfig) (*Subscriber, error) {
@@ -38,9 +41,10 @@ func NewSubscriber(db *bbolt.DB, config SubscriberConfig) (*Subscriber, error) {
 	}
 
 	return &Subscriber{
-		db:      db,
-		config:  config,
-		closeCh: make(chan struct{}),
+		db:         db,
+		config:     config,
+		closeCh:    make(chan struct{}),
+		loadMsgsFn: getMessages,
 	}, nil
 }
 
@@ -118,7 +122,7 @@ func (s *Subscriber) run(ctx context.Context, topic string, ch chan<- *message.M
 }
 
 func (s *Subscriber) receiveMessages(ctx context.Context, topic string, ch chan<- *message.Message) error {
-	messages, err := s.getMessages(ctx, topic)
+	messages, err := s.loadMsgsFn(ctx, s, topic)
 	if err != nil {
 		return errors.Wrap(err, "could not get all messages")
 	}
@@ -184,7 +188,7 @@ func (s *Subscriber) ack(topic string, rawMessageKey []byte) error {
 	})
 }
 
-func (s *Subscriber) getMessages(ctx context.Context, topic string) ([]rawMessage, error) {
+func getMessages(_ context.Context, s *Subscriber, topic string) ([]rawMessage, error) {
 	var messages []rawMessage
 
 	if err := s.db.View(func(tx *bbolt.Tx) error {
@@ -230,6 +234,11 @@ func (s *Subscriber) getOrCreateSubscriptionBucket(tx *bbolt.Tx, topic string) (
 
 func (s *Subscriber) getSubscriptionBucket(tx *bbolt.Tx, topic string) *bbolt.Bucket {
 	bucketNames := s.getSubscriptionBucketTree(topic)
+
+	var names []string
+	for _, name := range bucketNames {
+		names = append(names, string(name))
+	}
 
 	bucket := tx.Bucket(bucketNames[0])
 	if bucket == nil {
