@@ -41,7 +41,7 @@ func TestDelayedBoltPublisherNoDelay(t *testing.T) {
 	pub, err := bolt.NewDelayedPublisher(db, bolt.PublisherConfig{Common: commonCfg})
 	require.NoError(t, err)
 
-	sub, err := bolt.NewDelayedBoltSubscriber(db, bolt.SubscriberConfig{Common: commonCfg})
+	sub, err := bolt.NewDelayedSubscriber(db, bolt.SubscriberConfig{Common: commonCfg})
 	require.NoError(t, err)
 
 	topic := watermill.NewUUID()
@@ -70,7 +70,7 @@ func TestDelayedBoltPublisherWithDelay(t *testing.T) {
 	pub, err := bolt.NewDelayedPublisher(db, bolt.PublisherConfig{Common: commonCfg})
 	require.NoError(t, err)
 
-	sub, err := bolt.NewDelayedBoltSubscriber(db, bolt.SubscriberConfig{Common: commonCfg})
+	sub, err := bolt.NewDelayedSubscriber(db, bolt.SubscriberConfig{Common: commonCfg})
 	require.NoError(t, err)
 
 	topic := watermill.NewUUID()

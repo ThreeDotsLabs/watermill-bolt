@@ -16,9 +16,9 @@ type DelayedBoltSubscriber struct {
 	*Subscriber
 }
 
-// NewDelayedBoltSubscriber creates an initialized delayed subscriber that only
+// NewDelayedSubscriber creates an initialized delayed subscriber that only
 // delivers messages when their scheduled time has arrived.
-func NewDelayedBoltSubscriber(db *bbolt.DB, config SubscriberConfig) (*DelayedBoltSubscriber, error) {
+func NewDelayedSubscriber(db *bbolt.DB, config SubscriberConfig) (*DelayedBoltSubscriber, error) {
 	subscriber, err := NewSubscriber(db, config)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to create underlying subscriber")
