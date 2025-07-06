@@ -97,7 +97,7 @@ func (p *DelayedBoltPublisher) marshalMessages(messages []*message.Message) ([]r
 	for _, msg := range messages {
 		until := msg.Metadata.Get(delay.DelayedUntilKey)
 		if until == "" {
-			p.config.Common.Logger.Info("WARN: delayed until key is empty", watermill.LogFields{
+			p.config.Common.Logger.Debug("delayed until key is empty", watermill.LogFields{
 				"uuid": msg.UUID,
 			})
 			until = time.Now().UTC().Format(time.RFC3339)
