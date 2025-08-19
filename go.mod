@@ -5,7 +5,7 @@ go 1.22
 toolchain go1.23.0
 
 require (
-	github.com/ThreeDotsLabs/watermill v1.3.7
+	github.com/ThreeDotsLabs/watermill v1.4.6
 	github.com/boreq/errors v0.1.0
 	github.com/stretchr/testify v1.9.0
 	go.etcd.io/bbolt v1.3.11
