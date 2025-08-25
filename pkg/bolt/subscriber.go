@@ -236,11 +236,6 @@ func (s *Subscriber) getOrCreateSubscriptionBucket(tx *bbolt.Tx, topic string) (
 func (s *Subscriber) getSubscriptionBucket(tx *bbolt.Tx, topic string) *bbolt.Bucket {
 	bucketNames := s.getSubscriptionBucketTree(topic)
 
-	var names []string
-	for _, name := range bucketNames {
-		names = append(names, string(name))
-	}
-
 	bucket := tx.Bucket(bucketNames[0])
 	if bucket == nil {
 		return nil
