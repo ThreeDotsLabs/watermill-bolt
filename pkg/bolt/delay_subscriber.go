@@ -54,8 +54,6 @@ func getMessagesWithDelay(_ context.Context, s *Subscriber, topic string) ([]raw
 
 			if keyTime.Before(now) || keyTime.Equal(now) {
 				messages = append(messages, newRawMessage(k, v))
-			} else {
-				break
 			}
 		}
 
