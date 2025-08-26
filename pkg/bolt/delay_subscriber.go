@@ -47,8 +47,10 @@ func getMessagesWithDelay(_ context.Context, s *Subscriber, topic string) ([]raw
 		for k, v := c.First(); k != nil; k, v = c.Next() {
 			keyTime, err := extractTimestamp(k)
 			if err != nil {
+				fmt.Println("DEBUG: skipping key with invalid timestamp:", string(k), err)
 				continue
 			}
+			fmt.Println("DEBUG: processing key with time:", string(k), keyTime, "now:", now)
 
 			if keyTime.Before(now) || keyTime.Equal(now) {
 				messages = append(messages, newRawMessage(k, v))
