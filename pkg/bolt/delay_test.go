@@ -2,8 +2,6 @@ package bolt_test
 
 import (
 	"context"
-	"fmt"
-	"os"
 	"testing"
 	"time"
 
@@ -13,7 +11,6 @@ import (
 	"github.com/ThreeDotsLabs/watermill/message"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"go.etcd.io/bbolt"
 )
 
 var (
@@ -23,21 +20,10 @@ var (
 	}
 )
 
-func newBoltDB(t *testing.T) *bbolt.DB {
-	path := fmt.Sprintf("test_%s.db", t.Name())
-	db, err := bbolt.Open(path, 0600, nil)
-	require.NoError(t, err)
-
-	t.Cleanup(func() {
-		assert.NoError(t, db.Close())
-		assert.NoError(t, os.Remove(path))
-	})
-
-	return db
-}
-
 func TestDelayedBoltPublisherNoDelay(t *testing.T) {
-	db := newBoltDB(t)
+	db, cleanup := boltFixture(t)
+	t.Cleanup(cleanup)
+
 	pub, err := bolt.NewDelayedPublisher(db, bolt.PublisherConfig{Common: commonCfg})
 	require.NoError(t, err)
 
@@ -66,7 +52,9 @@ func TestDelayedBoltPublisherNoDelay(t *testing.T) {
 }
 
 func TestDelayedBoltPublisherWithDelay(t *testing.T) {
-	db := newBoltDB(t)
+	db, cleanup := boltFixture(t)
+	t.Cleanup(cleanup)
+
 	pub, err := bolt.NewDelayedPublisher(db, bolt.PublisherConfig{Common: commonCfg})
 	require.NoError(t, err)
 
