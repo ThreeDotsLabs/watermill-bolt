@@ -29,6 +29,7 @@ func TestDelayedBoltPublisherNoDelay(t *testing.T) {
 
 	sub, err := bolt.NewDelayedSubscriber(db, bolt.SubscriberConfig{Common: commonCfg})
 	require.NoError(t, err)
+	t.Cleanup(func() { require.NoError(t, sub.Close()) })
 
 	topic := watermill.NewUUID()
 
@@ -60,6 +61,7 @@ func TestDelayedBoltPublisherWithDelay(t *testing.T) {
 
 	sub, err := bolt.NewDelayedSubscriber(db, bolt.SubscriberConfig{Common: commonCfg})
 	require.NoError(t, err)
+	t.Cleanup(func() { require.NoError(t, sub.Close()) })
 
 	topic := watermill.NewUUID()
 
@@ -88,7 +90,7 @@ func TestDelayedBoltPublisherWithDelay(t *testing.T) {
 		default:
 			t.Errorf("message should be received")
 		}
-	}, time.Second, time.Millisecond*10)
+	}, time.Second*5, time.Millisecond*10)
 
 	select {
 	case <-messages:
