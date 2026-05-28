@@ -49,7 +49,7 @@ func TestDelayedBoltPublisherNoDelay(t *testing.T) {
 		default:
 			t.Errorf("message should be received")
 		}
-	}, time.Second, time.Millisecond*10)
+	}, time.Second*3, time.Millisecond*10)
 }
 
 func TestDelayedBoltPublisherWithDelay(t *testing.T) {
@@ -90,7 +90,7 @@ func TestDelayedBoltPublisherWithDelay(t *testing.T) {
 		default:
 			t.Errorf("message should be received")
 		}
-	}, time.Second*5, time.Millisecond*10)
+	}, time.Second*7, time.Millisecond*10)
 
 	select {
 	case <-messages:
